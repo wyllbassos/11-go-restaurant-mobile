@@ -60,9 +60,11 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     async function loadFoods(): Promise<void> {
       let url = `/foods?name_like=${searchValue}`;
+
       if (selectedCategory) {
-        url += `&category_like=${selectedCategory}`;
+        url = `/foods?category_like=${selectedCategory}`;
       }
+
       const response = await api.get<Food[]>(url);
       const formatedFoods = response.data.map(foodToFormat => {
         return {
@@ -70,6 +72,7 @@ const Dashboard: React.FC = () => {
           formattedPrice: formatValue(foodToFormat.price),
         };
       });
+
       setFoods(formatedFoods);
     }
 
